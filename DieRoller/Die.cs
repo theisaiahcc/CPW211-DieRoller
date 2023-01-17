@@ -6,26 +6,42 @@ using System.Threading.Tasks;
 
 namespace DieRoller
 {
+
 	/// <summary>
 	/// Represents one 6-sided die
 	/// </summary>
 	public class Die
 	{
+		private static Random _random;
+
+		static Die()
+		{
+			_random = new Random();
+		}
+
+		public Die() 
+		{
+			Roll();
+		}
 		/// <summary>
 		/// current value of die
 		/// </summary>
-		public byte faceValue { get; set; }
+		public byte FaceValue { get; private set; }
 		
 		/// <summary>
 		/// True if held
 		/// </summary>
-		public bool isHeld { get; set; }
+		public bool IsHeld { get; set; }
 
 		// Roll - set random value
-		public byte Roll() {
-			Random rand = new Random();
-			byte num = (byte)rand.Next(1, 7);
-			return num;
+		public byte Roll() 
+		{
+			if (!IsHeld) 
+			{
+				byte num = (byte)_random.Next(1, 7);
+				FaceValue = num;
+			}
+			return FaceValue;
 		}
 	}
 }
